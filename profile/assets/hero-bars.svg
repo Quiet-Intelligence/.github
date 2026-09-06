@@ -1,0 +1,45 @@
+<svg width="100%" height="160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Crisp Noise Texture -->
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="
+        1 0 0 0 0
+        1 0 0 0 0
+        1 0 0 0 0
+        0 0 0 9 -4" />
+    </filter>
+
+    <!-- Jumping Animation for True Static -->
+    <pattern id="static" width="300" height="300" patternUnits="userSpaceOnUse">
+      <rect width="300" height="300" filter="url(#noise)" fill="#F5F5F0" />
+      <animateTransform attributeName="patternTransform" type="translate" values="0,0; 137,89; -53,173; 211,-67; -109,101; 61,233" keyTimes="0; 0.2; 0.4; 0.6; 0.8; 1" dur="0.3s" calcMode="discrete" repeatCount="indefinite" />
+    </pattern>
+
+    <!-- Left (White/Opaque) to Right (Black/Transparent) Mask -->
+    <linearGradient id="fadeMask" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="40%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#000000" />
+      <stop offset="100%" stop-color="#000000" />
+    </linearGradient>
+
+    <mask id="noise-mask">
+      <rect width="100%" height="100%" fill="url(#fadeMask)" />
+    </mask>
+
+    <!-- Underlying Gradient (Dark to Signal) -->
+    <linearGradient id="signalGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0A0A0B" />
+      <stop offset="40%" stop-color="#141416" />
+      <stop offset="60%" stop-color="#F5F5F0" />
+      <stop offset="100%" stop-color="#F5F5F0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="100%" height="100%" fill="url(#signalGradient)" />
+
+  <!-- Animated Masked Noise -->
+  <rect width="100%" height="100%" fill="url(#static)" mask="url(#noise-mask)" />
+</svg>
